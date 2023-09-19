@@ -1,0 +1,14 @@
+{
+  "name": "myblock",
+  "version": "1.0.0",
+  "description": "Gutenberg block",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^26.12.0"
+  }
+}

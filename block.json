@@ -1,0 +1,10 @@
+{
+  "apiVersion": 2,
+  "name": "genius/myblock",
+  "title": "myblock",
+  "description": "Gutenberg Blok (add)",
+  "category": "text",
+  "icon": "admin-customizer",
+  "textdomain": "myblock",
+  "editorScript": "file:./index.js"
+}
