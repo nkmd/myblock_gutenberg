@@ -1,8 +1,8 @@
-/** #########################################################
+/* #########################################################
  *  главный файл ЛОГИКИ нашего блока
  ########################################################## */
 
-/** Подключаем React С компиляцией JSX  (Пр.2) ******************
+/* Подключаем React С компиляцией JSX  (Пр.2) ******************
 *  Нужен NODEJS https://nodejs.org/ru
 *  https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/
 	 > npm init
@@ -19,27 +19,20 @@
 
 // Импортируем код блоков (уст-й:  npm i @wordpress/blocks)
 import { registerBlockType } from '@wordpress/blocks';
-// Импортируем "Блок эдитор" (уст-й: npm i @wordpress/block-editor)
-import { useBlockProps } from '@wordpress/block-editor';
 
-// Импортируем файл стилий CSS (компилятор подхватит без доп. настроек уст-к)
+// Импортируем код (для Админки редактора и Фронтенда)- функци '/src/edit.js' и '/src/save.js'
+import Edit from './edit';
+import Save from './save';
+
+// Импортируем файл стилий CSS (для компилятора - подхватит без доп. настроек уст-к)
 // style.scss - для ФРОНТЕНДА и АДМИНКИ !
-import "./style.scss";// ! создаст: build/style-index.css - Подкл. в block.json
-import "./editor.scss"; // создаст: build/index.css - Подкл. в block.json
+import './style.scss'; // ! создаст: build/style-index.css - Подкл. в block.json
 
 // Передаём псевданим нашего API (block.json)
 registerBlockType( 'genius/myblock', {
 	// вывод на страницу АДМИНКИ
-	edit: function () {
-		const blokProps = useBlockProps(); // выз. '@wordpress/block-editor'
-		// console.log(blokProps); // что в объекте вообще.
-		// вывод служебных тегов, классов в админке  {...blokProps}
-		return <h1 {...blokProps} >__EDIT(React JSX) 2__</h1>;
-	},
+	edit: Edit,
 
 	// вывод на страницу ФРОНТЕНД пользователя
-	save: function () {
-		const blokProps = useBlockProps.save(); // выз. '@wordpress/block-editor' только для ФРОНТА.
-		return <h1 {...blokProps} >__SAVE(React JSX) 2__</h1>;
-	},
+	save: Save,
 } );

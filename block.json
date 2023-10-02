@@ -7,6 +7,13 @@
 	"icon": "admin-customizer",
 	"textdomain": "myblock",
 	"editorScript": "file:./build/index.js",
-	"style": "file:./build/index.css",
-	"editorStyle": "file:./build/editor-index.css"
+	"style": "file:./build/style-index.css",
+	"editorStyle": "file:./build/index.css",
+	"attributes": {
+		"text": {
+			"type": "string",
+			"source": "html",
+			"selector": "h1"
+		}
+	}
 }
