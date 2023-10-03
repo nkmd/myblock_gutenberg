@@ -2,6 +2,175 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/block/edit.js":
+/*!***************************!*\
+  !*** ./src/block/edit.js ***!
+  \***************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Edit; }
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+
+/* #########################################################
+ *  Код для редактора - Дочернего Блока (Админка)
+ ########################################################## */
+
+// Импорт компонент
+
+// Импорт "транслэйшенс рэди" (интернализацию для "textDomain")
+
+function Edit({
+  attributes,
+  setAttributes
+}) {
+  // Экспортируем title; и description; из /src/block/index.js
+  const {
+    title,
+    description
+  } = attributes;
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)()
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+    tagName: "h2",
+    allowedFormats: [],
+    value: title,
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Your Title', 'myblocks'),
+    onChange: val => setAttributes({
+      title: val
+    })
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+    tagName: "p",
+    allowedFormats: [],
+    value: description,
+    placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Your Description', 'myblocks'),
+    onChange: val => setAttributes({
+      description: val
+    })
+  }));
+}
+
+/*
+*  allowedBlocks={ [ 'core/image' ] }
+*  allowedFormats={ [ '' ] }
+* */
+
+/***/ }),
+
+/***/ "./src/block/index.js":
+/*!****************************!*\
+  !*** ./src/block/index.js ***!
+  \****************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/block/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./save */ "./src/block/save.js");
+/* #########################################################
+ *  Регистрация дочерного блока
+ ########################################################## */
+
+// Импортируем код блоков (уст-й:  npm i @wordpress/blocks)
+
+// Импортируем интернализацию для "textDomain"
+
+
+// Импорт файла сохранения и отображения на Админке (/src/blocs/edit.js)
+
+// Импорт файла отображения сохранения и  на Фронтенд (/src/blocs/save.js)
+
+
+// Регистр. дочернего блока, передача title; description; icon; (по аналогии block.json)
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('genius/myblock', {
+  title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('My Block (child)', 'myblocks'),
+  description: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Single Block (child)', 'myblocks'),
+  icon: 'universal-access',
+  parent: ['genius/myblocks'],
+  // Показать - только если есть родитель, выделен.
+  supports: {
+    html: false,
+    // откл. возможность html редактировать
+    reusable: false // откл. возможность доб. ссылку - ?
+  },
+
+  attributes: {
+    title: {
+      type: 'string',
+      // тип
+      source: 'html',
+      // не дублировать в метта поле
+      selector: 'h2'
+    },
+    description: {
+      type: 'string',
+      source: 'html',
+      // не дублировать в метта поле
+      selector: 'p'
+    }
+  },
+  // вывод на страницу АДМИНКИ
+  //edit: () => <p> Admin Edit </p>,
+  edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
+  // вывод на страницу ФРОНТЕНДА
+  // save: () => <p> Frontend Save</p>,
+  save: _save__WEBPACK_IMPORTED_MODULE_3__["default"]
+});
+
+/***/ }),
+
+/***/ "./src/block/save.js":
+/*!***************************!*\
+  !*** ./src/block/save.js ***!
+  \***************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Save; }
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+
+/* #########################################################
+ *  Код для Фронтенда части - Дочернего Блока
+ ########################################################## */
+
+// Импорт компонент
+
+function Save({
+  attributes
+}) {
+  // Экспортируем title; и description; из /src/block/index.js
+  const {
+    title,
+    description
+  } = attributes;
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+    tagName: "h2",
+    value: title
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+    tagName: "p",
+    value: description
+  }));
+}
+
+/***/ }),
+
 /***/ "./src/edit.js":
 /*!*********************!*\
   !*** ./src/edit.js ***!
@@ -22,38 +191,39 @@ __webpack_require__.r(__webpack_exports__);
  *  Код для редактора - Админка Gutenberg
  ########################################################## */
 
+/* !!! СОБРАНА ПАМЯТКА. МНОГИЕ ИМПОРТЫ НУЖНО СМОТРЕТЬ В ПРЕДИДУЩИХ УРОКАХ !!!
+*  <BlockControls ... - кнопки база, массивом.
+*  <AlignmentToolbar /> - "выравнивание по" , готовый элемент.
+*  { text && ( ... ) } - отобразит только когда есть текст в поле
+*  <ToolbarGroup> - группа с кнопками внутри |[B][I][U]|
+*  <ToolbarButton .../> - кнопка в "ТулБар -е"
+*  <ToolbarDropdownMenu ... > Выподающий список, кнопки массивом.
+*  <RichText ...> - Тип и контент блока, для сохранения в админке.
+*  <InspectorControls> - 'Block' в сайдбаре, свойства блока.
+*  <PanelBody ...> - Раздел 'Block -а' в сайдбаре,
+*  <TextControl ...> - Текстовое поле в Разделе который в Сайдбаре
+*
+*  <InnerBlocks ...> - Позволяет в контейнер на странице, вставлять вложенные блоки.
+* */
+
 // Импортируем "Блок эдитор" (уст-й: npm i @wordpress/block-editor)
-// И Получние компонента 'RichText' из 'block-editor'
+// И Получние компонента 'BlockControls',... из 'block-editor'
 
  // создаст: build/index.css - Подкл. в block.json
 
-// Получение на "Админ" части значений ( attributes - болжен быть указан в block.json!, setAttrtibutes )
-function Edit({
-  attributes,
-  setAttributes
-}) {
-  // const blokProps = useBlockProps(); // выз. '@wordpress/block-editor'
-  // console.log(blokProps); // что в объекте вообще.
-  // вывод служебных тегов, классов в админке  {...blokProps}
-  // return <h1 { ...blokProps }>__EDIT(React JSX) 3__</h1>;
-
-  // Обращение к компоненту 'RichText'
-  const {
-    text
-  } = attributes; // поучение в 'text' из 'attributes'
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
-    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)(),
-    tagName: "h1",
-    value: text // значение из константы
-    ,
-    onChange: value => setAttributes({
-      text: value
-    }) //! сохр в админке не на Фронт!
-    ,
-    placeholder: 'Введите текст',
-    allowedFormats: ['core/bold'] // допустимые элементы оформления текста [bold]
-  });
+// Получение на "Админ" части значений
+function Edit() {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)()
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {
+    allowedBlocks: ['genius/myblock']
+  }));
 }
+
+/*
+* allowedBlocks={ [ 'core/image' ] }
+* allowedBlocks={ [ 'genius/myblock ' ] }
+* */
 
 /***/ }),
 
@@ -66,11 +236,12 @@ function Edit({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./save */ "./src/save.js");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
+/* harmony import */ var _block__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./block */ "./src/block/index.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./save */ "./src/save.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
 /* #########################################################
- *  главный файл ЛОГИКИ нашего блока
+ *  ГЛАВНЫЙ файл ЛОГИКИ нашего блока
  ########################################################## */
 
 /* Подключаем React С компиляцией JSX  (Пр.2) ******************
@@ -91,6 +262,9 @@ __webpack_require__.r(__webpack_exports__);
 // Импортируем код блоков (уст-й:  npm i @wordpress/blocks)
 
 
+// Импорт дочернего блока из папки /src/block/index.js
+
+
 // Импортируем код (для Админки редактора и Фронтенда)- функци '/src/edit.js' и '/src/save.js'
 
 
@@ -100,11 +274,11 @@ __webpack_require__.r(__webpack_exports__);
  // ! создаст: build/style-index.css - Подкл. в block.json
 
 // Передаём псевданим нашего API (block.json)
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('genius/myblock', {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('genius/myblocks', {
   // вывод на страницу АДМИНКИ
-  edit: _edit__WEBPACK_IMPORTED_MODULE_1__["default"],
+  edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   // вывод на страницу ФРОНТЕНД пользователя
-  save: _save__WEBPACK_IMPORTED_MODULE_2__["default"]
+  save: _save__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 
 /***/ }),
@@ -129,23 +303,13 @@ __webpack_require__.r(__webpack_exports__);
  ########################################################## */
 
 // Импортируем "Блок эдитор" (уст-й: npm i @wordpress/block-editor)
-// И Получние компонента 'RichText' из 'block-editor' для сохранения на "Фронт"
+// И Получние компонента  из 'block-editor' для сохранения на "Фронт"
 
-function save({
-  attributes
-}) {
-  // const blokProps = useBlockProps.save(); // выз. '@wordpress/block-editor' только для ФРОНТА.
-
-  const {
-    text
-  } = attributes; // поучение  'attributes' (block.json)
-
-  // RichText.Content - только визуальная часть (для ФРОНТА). Сохранение на "Фронт".
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
-    ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save(),
-    tagName: "h1",
-    value: text // значение из константы
-  });
+function save() {
+  // визуальная часть (для ФРОНТА). Сохранение на "Фронт".
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null));
 }
 
 /***/ }),
@@ -201,6 +365,16 @@ module.exports = window["wp"]["blocks"];
 /***/ (function(module) {
 
 module.exports = window["wp"]["element"];
+
+/***/ }),
+
+/***/ "@wordpress/i18n":
+/*!******************************!*\
+  !*** external ["wp","i18n"] ***!
+  \******************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["i18n"];
 
 /***/ })
 

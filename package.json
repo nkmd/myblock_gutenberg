@@ -13,7 +13,9 @@
 		"s": "wp-scripts start"
 	},
 	"stylelint": {
-		"extends": [ "@wordpress/stylelint-config/scss" ]
+		"extends": [
+			"@wordpress/stylelint-config/scss"
+		]
 	},
 	"author": "",
 	"license": "ISC",
@@ -25,6 +27,8 @@
 	},
 	"dependencies": {
 		"@wordpress/block-editor": "^12.9.0",
-		"@wordpress/blocks": "^12.18.0"
+		"@wordpress/blocks": "^12.18.0",
+		"@wordpress/components": "^25.8.0",
+		"@wordpress/i18n": "^4.42.0"
 	}
 }

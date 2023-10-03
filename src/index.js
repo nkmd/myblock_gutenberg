@@ -1,5 +1,5 @@
 /* #########################################################
- *  главный файл ЛОГИКИ нашего блока
+ *  ГЛАВНЫЙ файл ЛОГИКИ нашего блока
  ########################################################## */
 
 /* Подключаем React С компиляцией JSX  (Пр.2) ******************
@@ -20,6 +20,9 @@
 // Импортируем код блоков (уст-й:  npm i @wordpress/blocks)
 import { registerBlockType } from '@wordpress/blocks';
 
+// Импорт дочернего блока из папки /src/block/index.js
+import './block';
+
 // Импортируем код (для Админки редактора и Фронтенда)- функци '/src/edit.js' и '/src/save.js'
 import Edit from './edit';
 import Save from './save';
@@ -29,10 +32,9 @@ import Save from './save';
 import './style.scss'; // ! создаст: build/style-index.css - Подкл. в block.json
 
 // Передаём псевданим нашего API (block.json)
-registerBlockType( 'genius/myblock', {
+registerBlockType( 'genius/myblocks', {
 	// вывод на страницу АДМИНКИ
 	edit: Edit,
-
 	// вывод на страницу ФРОНТЕНД пользователя
 	save: Save,
 } );
