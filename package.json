@@ -1,7 +1,7 @@
 {
-	"name": "myblock",
+	"name": "dynamicblock",
 	"version": "1.0.0",
-	"description": "Gutenberg block",
+	"description": "Gutenberg Dynamic Block",
 	"main": "index.js",
 	"scripts": {
 		"b": "wp-scripts build",
