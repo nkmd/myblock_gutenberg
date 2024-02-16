@@ -18,27 +18,94 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_blob__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/blob */ "@wordpress/blob");
+/* harmony import */ var _wordpress_blob__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blob__WEBPACK_IMPORTED_MODULE_4__);
 
 /* #########################################################
  *  Код для редактора - Дочернего Блока (Админка)
  ########################################################## */
 
-// Импорт компонент
+// Импорт нужных компонент ( MediaPlaceholder - только для загрузки картинок, )
 
 // Импорт "транслэйшенс рэди" (интернализацию для "textDomain")
+
+// Импорт 'спинер' (показать загрузку изобр. на сервер), И 'ToolbarButton', 'PanelBody', ...
+
+// Импорт компонента - показывать 'спинер' только при загрузке
 
 function Edit({
   attributes,
   setAttributes
 }) {
-  // Экспортируем title; и description; из /src/block/index.js
+  // Экспортируем title; и description; image_id, ... из /src/block/index.js
   const {
     title,
-    description
+    description,
+    image_id,
+    image_url,
+    image_alt
   } = attributes;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+
+  // посмотреть что WP кладёт в image_url (В реал. времени - не грузит изображение сразу)
+  // console.log(image_url);
+
+  // вывели дублированный код в отдельную функ.
+  const onSelectURL = val => {
+    setAttributes({
+      image_id: undefined,
+      image_url: val,
+      image_alt: ''
+    });
+  };
+  const onSelect = val => {
+    setAttributes({
+      image_id: val.id,
+      image_url: val.url,
+      image_alt: val.alt
+    });
+  };
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, image_url && !(0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_4__.isBlobURL)(image_url) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Settings for Image', 'myblocks')
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Change ALT', 'myblocks'),
+    value: image_alt,
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Change attribute text ALT', 'myblocks'),
+    onChange: val => setAttributes({
+      image_alt: val
+    })
+  }))), image_url && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.BlockControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaReplaceFlow, {
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Replace Image', 'myblocks'),
+    onSelect: onSelect,
+    onSelectURL: onSelectURL,
+    accept: "image/*",
+    allowedTypes: ['image']
+    //disableMediaButtons={ image_url }
+    ,
+    mediaId: image_id,
+    mediaURL: image_url
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToolbarButton, {
+    onClick: () => setAttributes({
+      image_id: undefined,
+      image_url: undefined,
+      image_alt: ''
+    })
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Remove Image', 'myblocks'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)()
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+  }, image_url && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: ` image ${(0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_4__.isBlobURL)(image_url) ? 'is-loading' : 'loaded'}`
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: image_url,
+    alt: image_alt,
+    id: image_id
+  }), (0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_4__.isBlobURL)(image_url) && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaPlaceholder, {
+    onSelect: onSelect,
+    onSelectURL: onSelectURL,
+    accept: "image/*",
+    allowedTypes: ['image'],
+    disableMediaButtons: image_url
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
     tagName: "h2",
     allowedFormats: [],
     value: title,
@@ -54,13 +121,24 @@ function Edit({
     onChange: val => setAttributes({
       description: val
     })
-  }));
+  })));
 }
 
 /*
-*  allowedBlocks={ [ 'core/image' ] }
-*  allowedFormats={ [ '' ] }
-* */
+/* **********************************************
+  allowedBlocks={ [ 'core/image' ] }
+  allowedFormats={ [ '' ] }
+* -----------------------------------
+     <MediaPlaceholder
+        onSelect={ ( val ) => console.log( val ) }
+        onSelectURL={ ( val ) => console.log( val ) }
+        accept="image/*"
+        allowedTypes={ ['image'] }
+    />
+* -----------------------------------
+
+
+********************************************** */
 
 /***/ }),
 
@@ -117,6 +195,24 @@ __webpack_require__.r(__webpack_exports__);
       source: 'html',
       // не дублировать в метта поле
       selector: 'p'
+    },
+    image_url: {
+      type: 'string',
+      source: 'attribute',
+      // хранить в атрибутах
+      selector: 'img',
+      attribute: 'src'
+    },
+    image_alt: {
+      type: 'string',
+      source: 'attribute',
+      // хранить в атрибутах
+      selector: 'img',
+      attribute: 'alt',
+      default: ''
+    },
+    image_id: {
+      type: 'number'
     }
   },
   // вывод на страницу АДМИНКИ
@@ -156,11 +252,18 @@ function Save({
   // Экспортируем title; и description; из /src/block/index.js
   const {
     title,
-    description
+    description,
+    image_id,
+    image_url,
+    image_alt
   } = attributes;
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
+  }, image_url && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: image_url,
+    alt: image_alt,
+    id: image_id
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
     tagName: "h2",
     value: title
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText.Content, {
@@ -209,8 +312,8 @@ __webpack_require__.r(__webpack_exports__);
 *  <PanelBody ...> - Раздел 'Block -а' в сайдбаре, '@wordpress/components'
 *  <TextControl ...> - Текстовое поле в Разделе который в Сайдбаре
 *
-*  <InnerBlocks ...> - Позволяет в контейнер на странице, вставлять вложенные блоки.
-*
+*  <InnerBlocks ...>  - Позволяет в контейнер на странице, вставлять вложенные блоки.
+*  <RangeControl ...> - Ползунок
 * ================================================================== */
 
 // Импортируем "Блок эдитор" (уст-й: npm i @wordpress/block-editor)
@@ -225,7 +328,7 @@ __webpack_require__.r(__webpack_exports__);
 // создаст: build/index.css - Подкл. в block.json
 
 
-// Получение на "Админ" части значений и сохранение на Админке
+// Получение на "Админ" части значений и сохранение на Админке (attributes из block.json)
 function Edit({
   attributes,
   setAttributes
@@ -395,6 +498,16 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
+
+/***/ }),
+
+/***/ "@wordpress/blob":
+/*!******************************!*\
+  !*** external ["wp","blob"] ***!
+  \******************************/
+/***/ (function(module) {
+
+module.exports = window["wp"]["blob"];
 
 /***/ }),
 

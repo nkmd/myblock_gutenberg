@@ -33,6 +33,22 @@ registerBlockType( 'genius/myblock', {
           source: 'html', // не дублировать в метта поле
           selector: 'p',
         },
+        image_url: {
+            type: 'string',
+            source: 'attribute', // хранить в атрибутах
+            selector: 'img',
+            attribute: 'src',
+        },
+        image_alt: {
+            type: 'string',
+            source: 'attribute', // хранить в атрибутах
+            selector: 'img',
+            attribute: 'alt',
+            default: '',
+        },
+        image_id: {
+            type: 'number',
+        },
     },
 
 
